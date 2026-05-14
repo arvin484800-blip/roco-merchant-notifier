@@ -259,13 +259,19 @@ def push_all(title, body, markdown, image_url):
             print("✅ NotifyMe 推送已发送")
         except: pass
     
-    if BARK_KEY:
+    for bark_key in [BARK_KEY, BARK_KEY_2]:
+    if bark_key:
         try:
-            requests.post(f"https://api.day.app/{BARK_KEY}", data={
-                "title": title, "body": body, "group": "洛克王国", "image": image_url, "isArchive": 1
+            requests.post(f"https://api.day.app/{bark_key}", data={
+                "title": title,
+                "body": body,
+                "group": "洛克王国",
+                "image": image_url,
+                "isArchive": 1
             }, timeout=10)
             print("✅ Bark 推送已发送")
-        except: pass
+        except Exception as e:
+            print(f"❌ Bark 推送失败: {e}")
 
 # ================= 5. 主入口 =================
 
